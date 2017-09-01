@@ -106,13 +106,35 @@ public class GroupList<K>
     @Override
     public String toString()
     {
-        String groupsString = "Groups: " + System.lineSeparator();
-        int numGroups = getNumGroups();
-        for(int i = 1; i <= numGroups; i++)
+//        String groupsString = "Groups: " + System.lineSeparator();
+//        int numGroups = getNumGroups();
+//        for(int i = 1; i <= numGroups; i++)
+//        {
+//            groupsString += printGroup(i);
+//        }
+//        
+//        return groupsString;
+        
+        StringBuilder[] elements = new StringBuilder[getNumGroups()];
+        
+        for(K key : groups.keySet())
         {
-            groupsString += printGroup(i);
+            int group = groups.get(key) - 1;
+            
+            if(elements[group] == null)
+                elements[group] = new StringBuilder();
+            
+            
+                elements[group].append(key).append("     ");
         }
         
-        return groupsString;
+        StringBuilder groupsString = new StringBuilder("Groups: " + System.lineSeparator());
+        int i = 1;
+        for(StringBuilder group : elements)
+        {
+            groupsString.append("\tGroup ").append(i).append(":").append(System.lineSeparator()).append("\t\t").append(group).append(System.lineSeparator());
+            i++;
+        }
+        return groupsString.toString();
     }
 }
