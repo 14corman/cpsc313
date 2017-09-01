@@ -6,8 +6,15 @@
 package Problems;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -15,40 +22,57 @@ import java.util.Set;
  */
 public class GroupList<K>
 {
-    private final ArrayList<Set<K>> groups;
+    private final HashMap<K, Integer> groups;
+    private int currentGroup = 1;
     
     public GroupList()
     {
-        groups = new ArrayList<>();
+        groups = new HashMap<>();
     }
     
-    public void addGroup(K first, K second)
+    public boolean addPair(K first, K second)
     {
-        for(Set<K> group : groups)
+        if(first == second)
+            return false;
+        
+        Integer fGroup = groups.get(first);
+        Integer sGroup = groups.get(second);
+        
+        if(fGroup == null && sGroup == null)
         {
-            if(group.contains(first) && group.contains(second))
-                return;
-            else if(group.contains(first))
-            {
-                group.add(second);
-                return;
-            }
-            else if(group.contains(second))
-            {
-                group.add(first);
-                return;
-            }
+            groups.put(first, currentGroup);
+            groups.put(second, currentGroup);
+            currentGroup++;
+            return true;
+        }
+        else if(fGroup == null && sGroup != null)
+        {
+            groups.put(first, sGroup);
+            return true;
+        }
+        else if(fGroup != null && sGroup == null)
+        {
+            groups.put(second, fGroup);
+            return true;
         }
         
-        Set<K> group = new HashSet();
-        group.add(first);
-        group.add(second);
-        groups.add(group);
+        return false;
+    }
+    
+    /**
+     * Query to check if 2 elements are in the same group.
+     * @param first
+     * @param second
+     * @return True if first and second are in the same group or if neither are in a group.
+     */
+    public boolean inSameGroup(K first, K second)
+    {
+        return Objects.equals(groups.get(first), groups.get(second));
     }
     
     public int getNumGroups()
     {
-        return groups.size();
+        return (int) groups.values().stream().sorted().distinct().count();
     }
     
     public Set<K> getGroup(int n)
@@ -56,7 +80,13 @@ public class GroupList<K>
         if(n >= groups.size())
             throw new IllegalArgumentException(n + " is too large. Total number of groups = " + groups.size());
         
-        return groups.get(n);
+        Set<K> temp = new HashSet();
+        groups.forEach((Object t, Object u) -> 
+        {
+            if((int) u == n)
+                temp.add((K) t);
+        });
+        return temp;
     }
     
     public String printGroup(int n)
@@ -65,7 +95,8 @@ public class GroupList<K>
             throw new IllegalArgumentException(n + " is too large. Total number of groups = " + groups.size());
         
         String list = "\tGroup " + n + ":" + System.lineSeparator() + "\t\t";
-        for(K item : groups.get(n))
+        Set<K> group = getGroup(n);
+        for(K item : group)
         {
             list += item + "     ";
         }
@@ -76,7 +107,8 @@ public class GroupList<K>
     public String toString()
     {
         String groupsString = "Groups: " + System.lineSeparator();
-        for(int i = 0; i < groups.size(); i++)
+        int numGroups = getNumGroups();
+        for(int i = 1; i <= numGroups; i++)
         {
             groupsString += printGroup(i);
         }
