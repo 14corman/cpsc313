@@ -6,9 +6,6 @@
 package Problems;
 
 import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.Out;
-import java.util.Arrays;
-import java.util.Random;
 
 /**
  *
@@ -18,7 +15,8 @@ public class prob1
 {
     public static void main(String args[])
     {
-        GroupList<Integer> groups = new GroupList();
+//        GroupList<Integer> groups = new GroupList();
+        Groups groups = new Groups();
         In in = new In(args[0]);
         int n = in.readInt();
         int[] array = new int[n];
