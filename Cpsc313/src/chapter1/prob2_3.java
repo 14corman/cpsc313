@@ -10,6 +10,7 @@ import edu.princeton.cs.algs4.Interval2D;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -27,7 +28,6 @@ public class prob2_3 {
         StdDraw.setCanvasSize((int) (Math.abs(min) + Math.abs(max)) * 100, (int) (Math.abs(min) + Math.abs(max)) * 100);
         StdDraw.setXscale(min - 1, max + 1);
         StdDraw.setYscale(min - 1, max + 1);
-//        StdDraw.setPenRadius(0.005);
         
         for(int i = 0; i < n; i++)
         {
@@ -47,6 +47,27 @@ public class prob2_3 {
             Interval2D interval = new Interval2D(i1, i2);
             interval.draw();
             intervals.add(interval);
+        }
+        
+        Interval2D[] intervalsArray = intervals.toArray(new Interval2D[0]);
+        for(int i = 0; i < intervalsArray.length; i++)
+        {
+            Interval2D i1 = intervalsArray[i];
+            for(int x = i + 1; x < intervalsArray.length; x++)
+            {
+                Interval2D i2 = intervalsArray[x];
+                
+                boolean i1ti2 = i1.intersects(i2);
+                boolean i2ti1 = i2.intersects(i1);
+                
+                System.out.println(i1ti2 + " and " + i2ti1);
+                
+//                if(i1.intersects(i2))
+//                    System.out.println(i1 + " " + i2 + " intersect");
+//                
+//                if(i2.intersects(i1))
+//                    System.out.println(i2 + " xx " + i1 + " intersect");
+            }
         }
         StdDraw.show();
     }
