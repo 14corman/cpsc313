@@ -11,75 +11,28 @@ package Problems;
  */
 public class Group
 {
-    private int[] group = new int[0];
+    private Entry[] group = new Entry[0];
     
-    public int getElement(int i) 
+    public Entry getElement(int item) 
     {
-        final int e = group[i];
-        return e;
+        return group[item];
     }
     
-    public boolean contains(int i)
+    public Entry[] getEntries()
     {
-        return getPos(i) != -1;
+        return group;
     }
     
-    /**
-     * Binary search.
-     * @param i
-     * @return The position of the element or -1 if the element is not in the group.
-     */
-    public int getPos(int i)
+    public void setGroup(Entry[] entries)
     {
-        int start = 0;
-        int end = group.length - 1;
-        while(start <= end)
-        {
-            int mid = (start + end) / 2;
-            if(i == group[mid])
-                return mid;
-            
-            if(i < (int) group[mid])
-                end = mid - 1;
-            else
-                start = mid + 1;
-        }
-        return -1;
+        group = entries;
     }
     
-    public void add(int item)
+    public void add(Entry entry)
     {
-        int[] temp = new int[group.length + 1];
-        
-        if(temp.length == 1)
-        {
-            temp[0] = item;
-            group = temp;
-            return;
-        }
-        
-        int i = 0;
-        for(;i < group.length; i++)
-        {
-            if(group[i] == item)
-                return;
-            
-            if(group[i] < item)
-                temp[i] = group[i];
-            else
-                break;
-        }
-        
-        temp[i++] = item;
-        
-        for(; i - 1 < group.length; i++)
-        {
-            if(group[i - 1] == item)
-                return;
-            
-            temp[i] = group[i - 1];
-        }
-        
+        Entry[] temp = new Entry[group.length + 1];
+        System.arraycopy(group, 0, temp, 0, group.length);
+        temp[temp.length - 1] = entry;
         group = temp;
     }
     
@@ -87,24 +40,11 @@ public class Group
     public String toString()
     {
         String list = "\t";
-        for(int item : (int[]) group)
+        for(Entry item :  group)
         {
             list += item + "   ";
         }
         
         return list;
-    }
-    
-    public static void main(String[] args)
-    {
-        Group g = new Group();
-        g.add(5);
-        g.add(2);
-        g.add(10);
-        g.add(7);
-        g.add(4);
-        g.add(4);
-        
-        System.out.println(g);
     }
 }

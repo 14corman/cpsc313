@@ -15,14 +15,10 @@ public class prob1
 {
     public static void main(String args[])
     {
-//        GroupList<Integer> groups = new GroupList();
-        Groups groups = new Groups();
         In in = new In(args[0]);
         int n = in.readInt();
-        int[] array = new int[n];
-        
-        for(int i = 0; i < n; i++)
-            array[i] = i;
+//        GroupList<Integer> groups = new GroupList();
+        Groups groups = new Groups(n);
         
         String line;
         while(in.hasNextLine())
@@ -31,9 +27,7 @@ public class prob1
             if(!line.equals(""))
             {
                 String[] parts = line.split(" ");
-                int first = array[Integer.parseInt(parts[0])];
-                int second = array[Integer.parseInt(parts[1])];
-                groups.addPair(first, second);
+                groups.addPair(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
             }
         }
         
