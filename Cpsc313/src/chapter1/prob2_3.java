@@ -57,16 +57,8 @@ public class prob2_3 {
             {
                 Interval2D i2 = intervalsArray[x];
                 
-                boolean i1ti2 = i1.intersects(i2);
-                boolean i2ti1 = i2.intersects(i1);
-                
-                System.out.println(i1ti2 + " and " + i2ti1);
-                
-//                if(i1.intersects(i2))
-//                    System.out.println(i1 + " " + i2 + " intersect");
-//                
-//                if(i2.intersects(i1))
-//                    System.out.println(i2 + " xx " + i1 + " intersect");
+                if(i1.intersects(i2))
+                    System.out.println(i1 + " " + i2 + " intersect");
             }
         }
         StdDraw.show();

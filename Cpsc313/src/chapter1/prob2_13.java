@@ -5,9 +5,9 @@
  */
 package chapter1;
 
-import edu.princeton.cs.algs4.Date;
+import chapter1.classes.Date;
+import chapter1.classes.Transaction;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.Transaction;
 
 /**
  *
