@@ -25,7 +25,7 @@ public class Groups
     
     public void join(int group1, int group2)
     {
-        Entry[] e = groups[group1].getEntries();
+        Entry[] e = groups[group2].getEntries();
         
         for(Entry entry : e)
         {
