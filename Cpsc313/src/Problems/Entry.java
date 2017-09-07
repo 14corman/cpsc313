@@ -13,8 +13,6 @@ public class Entry {
     
     private final int key;
     private Integer group = null;
-    private Entry left = null;
-    private Entry right = null;
     
     public Entry(int key)
     {
@@ -34,26 +32,6 @@ public class Entry {
     public Integer getGroup()
     {
         return group;
-    }
-    
-    public void setLeft(Entry left)
-    {
-        this.left = left;
-    }
-    
-    public void setRight(Entry right)
-    {
-        this.right = right;
-    }
-    
-    public Entry getRight()
-    {
-        return right;
-    }
-    
-    public Entry getLeft()
-    {
-        return left;
     }
     
     /**

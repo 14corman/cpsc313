@@ -11,8 +11,9 @@ package Problems;
  */
 public class Groups
 {
-    private Group[] groups = new Group[0];
+    private Group[] groups = new Group[1];
     private final Entry[] items;
+    private int n = 0;
     
     public Groups(int n)
     {
@@ -25,22 +26,32 @@ public class Groups
     
     public void join(int group1, int group2)
     {
-        Entry[] e = groups[group2].getEntries();
-        
-        for(Entry entry : e)
+        Group group = groups[group2];
+        for(int key : group.getEntries())
         {
-            groups[group1].add(entry);
-            entry.setGroup(group1);
+            groups[group1].add(key);
+                items[key - 1].setGroup(group1);
         }
         
-        int moved = groups.length - group2 - 1;
+        int moved = n - group2 - 1;
         if(moved > 0)
-             System.arraycopy(groups, group2 + 1, groups, group2, moved);
+        {
+            System.arraycopy(groups, group2 + 1, groups, group2, moved);
+            for(int i = group2; i < group2 + moved; i++)
+            {
+                int[] keys = groups[i].getEntries();
+                for(int key : keys)
+                {
+                        items[key].setGroup(i);
+                }
+            }
+        }
         
-        Group[] temp = new Group[groups.length - 1];
-        System.arraycopy(groups, 0, temp, 0, temp.length);
+        n--;
+//        groups[n].close();
+        groups[n] = null;
         
-        groups = temp;
+        if(n > 0 && n == groups.length / 4) resize(groups.length / 2);
         
     }
     
@@ -51,7 +62,7 @@ public class Groups
     
     public int getNumGroups()
     {
-        return groups.length;
+        return n;
     }
     
     //query if 2 are in same group
@@ -71,7 +82,7 @@ public class Groups
     //add element to group i
     private void add(int item, int group)
     {
-        groups[group].add(items[item - 1]);
+        groups[group].add(items[item - 1].getKey());
         items[item - 1].setGroup(group);
     }
     
@@ -80,7 +91,7 @@ public class Groups
     public String toString()
     {
         String groupString = "";
-        for(int i = 0; i < groups.length; i++)
+        for(int i = 0; i < n; i++)
         {
             groupString += "Group :" + i + System.lineSeparator() + printGroup(i) + System.lineSeparator();
         }
@@ -110,31 +121,30 @@ public class Groups
             return;
         
         if(firstB != -1 && secondB != -1)
-        {
             join(firstB, secondB);
-        }
         else if(firstB != -1 && secondB == -1)
-        {
             add(second, firstB);
-        }
         else if(firstB == -1 && secondB != -1)
-        {
             add(first, secondB);
-        }
         else
         {
             Group group = new Group();
-            group.add(items[first - 1]);
-            group.add(items[second - 1]);
+            group.add(items[first - 1].getKey());
+            group.add(items[second - 1].getKey());
             
-            Group[] temp = new Group[groups.length + 1];
-            System.arraycopy(groups, 0, temp, 0, groups.length);
-            temp[temp.length - 1] = group;
-            items[first - 1].setGroup(temp.length - 1);
-            items[second - 1].setGroup(temp.length - 1);
+            if(n == groups.length) resize(2 * groups.length);
             
-            groups = temp;
+            items[first - 1].setGroup(n);
+            items[second - 1].setGroup(n);
+            groups[n++] = group;
         }
+    }
+    
+    private void resize(int max)
+    {
+        Group[] temp = new Group[max];
+        System.arraycopy(groups, 0, temp, 0, n);
+        groups = temp;
     }
     
     //Is item in a group

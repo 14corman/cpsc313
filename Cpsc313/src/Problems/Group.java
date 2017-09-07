@@ -11,36 +11,43 @@ package Problems;
  */
 public class Group
 {
-    private Entry[] group = new Entry[0];
+    private int[] group = new int[1];
+    private int n = 0;
     
-    public Entry getElement(int item) 
+    public int getElement(int item) 
     {
         return group[item];
     }
     
-    public Entry[] getEntries()
+    public int[] getEntries()
     {
         return group;
     }
     
-    public void setGroup(Entry[] entries)
+    
+    public void add(Integer entry)
     {
-        group = entries;
+        if(n == group.length) resize(2 * group.length);
+        group[n++] = entry;
     }
     
-    public void add(Entry entry)
+    private void resize(int max)
     {
-        Entry[] temp = new Entry[group.length + 1];
-        System.arraycopy(group, 0, temp, 0, group.length);
-        temp[temp.length - 1] = entry;
+        int[] temp = new int[max];
+        System.arraycopy(group, 0, temp, 0, n);
         group = temp;
+    }
+    
+    public void close()
+    {
+        group = new int[0];
     }
     
     @Override
     public String toString()
     {
         String list = "\t";
-        for(Entry item :  group)
+        for(Integer item :  group)
         {
             list += item + "   ";
         }
