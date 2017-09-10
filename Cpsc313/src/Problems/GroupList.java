@@ -13,6 +13,8 @@ import java.util.Set;
 /**
  *
  * @author cjedwards1
+ * 
+ * Import version of problem.
  */
 public class GroupList<K>
 {
