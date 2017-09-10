@@ -17,6 +17,8 @@ import java.util.Set;
 public class GroupList<K>
 {
     private final HashMap<K, Integer> groups;
+    
+    //Current group number on.
     private int currentGroup = 1;
     
     public GroupList()
@@ -32,19 +34,19 @@ public class GroupList<K>
         Integer fGroup = groups.get(first);
         Integer sGroup = groups.get(second);
         
-        if(fGroup == null && sGroup == null)
+        if(fGroup == null && sGroup == null)        //Neither item is in a group
         {
             groups.put(first, currentGroup);
             groups.put(second, currentGroup);
             currentGroup++;
             return true;
         }
-        else if(fGroup == null && sGroup != null)
+        else if(fGroup == null && sGroup != null)   //Second is in group
         {
             groups.put(first, sGroup);
             return true;
         }
-        else if(fGroup != null && sGroup == null)
+        else if(fGroup != null && sGroup == null)   //First is in group
         {
             groups.put(second, fGroup);
             return true;
@@ -100,15 +102,6 @@ public class GroupList<K>
     @Override
     public String toString()
     {
-//        String groupsString = "Groups: " + System.lineSeparator();
-//        int numGroups = getNumGroups();
-//        for(int i = 1; i <= numGroups; i++)
-//        {
-//            groupsString += printGroup(i);
-//        }
-//        
-//        return groupsString;
-        
         StringBuilder[] elements = new StringBuilder[getNumGroups()];
         
         for(K key : groups.keySet())
@@ -119,7 +112,7 @@ public class GroupList<K>
                 elements[group] = new StringBuilder();
             
             
-                elements[group].append(key).append("     ");
+            elements[group].append(key).append("     ");
         }
         
         StringBuilder groupsString = new StringBuilder("Groups: " + System.lineSeparator());

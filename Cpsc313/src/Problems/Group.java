@@ -38,11 +38,6 @@ public class Group
         group = temp;
     }
     
-    public void close()
-    {
-        group = new int[0];
-    }
-    
     @Override
     public String toString()
     {

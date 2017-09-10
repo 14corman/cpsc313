@@ -17,8 +17,8 @@ public class prob1
     {
         In in = new In(args[0]);
         int n = in.readInt();
-//        GroupList<Integer> groups = new GroupList();
-        Groups groups = new Groups(n);
+        GroupList<Integer> groups = new GroupList();
+//        Groups groups = new Groups(n);
         
         String line;
         while(in.hasNextLine())
@@ -32,6 +32,6 @@ public class prob1
         }
         
         in.close();
-        System.out.println(groups.toString());
+//        System.out.println(groups.toString());
     }
 }

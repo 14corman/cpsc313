@@ -11,8 +11,9 @@ package Problems;
  */
 public class Groups
 {
-    private Group[] groups = new Group[1];
     private final Entry[] items;
+    
+    //Number of groups.
     private int n = 0;
     
     public Groups(int n)
@@ -20,39 +21,25 @@ public class Groups
         items = new Entry[n];
         for(int i = 0; i < n; i++)
         {
-            items[i] = new Entry(i + 1);
+            items[i] = new Entry(i);
         }
     }
     
+    /**
+     * Put all the elements from group 2 into group 1.
+     * @param group1
+     * @param group2 
+     */
     public void join(int group1, int group2)
     {
-        Group group = groups[group2];
-        for(int key : group.getEntries())
+        for(Entry entry : items)
         {
-            groups[group1].add(key);
-                items[key - 1].setGroup(group1);
+            if(entry.getGroup() == group2)
+                entry.setGroup(group1);
+            else if(entry.getGroup() > group2)
+                entry.setGroup(entry.getGroup() - 1);
         }
-        
-        int moved = n - group2 - 1;
-        if(moved > 0)
-        {
-            System.arraycopy(groups, group2 + 1, groups, group2, moved);
-            for(int i = group2; i < group2 + moved; i++)
-            {
-                int[] keys = groups[i].getEntries();
-                for(int key : keys)
-                {
-                        items[key].setGroup(i);
-                }
-            }
-        }
-        
         n--;
-//        groups[n].close();
-        groups[n] = null;
-        
-        if(n > 0 && n == groups.length / 4) resize(groups.length / 2);
-        
     }
     
     public int getNumItems()
@@ -65,13 +52,13 @@ public class Groups
         return n;
     }
     
-    //query if 2 are in same group
+    //query if 2 items are in same group
     public boolean inSameGroup(int first, int second)
     {
-        Integer f = items[first - 1].getGroup();
-        Integer s = items[second - 1].getGroup();
+        int f = items[first].getGroup();
+        int s = items[second].getGroup();
         
-        if(s == null || f == null)
+        if(s == -1 || f == -1)
             return false;
         else
         {
@@ -79,36 +66,54 @@ public class Groups
         }
     }
     
-    //add element to group i
+    //add element to group
     private void add(int item, int group)
     {
-        groups[group].add(items[item - 1].getKey());
-        items[item - 1].setGroup(group);
+        items[item].setGroup(group);
     }
     
     //toString
     @Override
     public String toString()
     {
-        String groupString = "";
-        for(int i = 0; i < n; i++)
+        String[] groupString = new String[n];
+        
+        for(Entry entry : items)
         {
-            groupString += "Group :" + i + System.lineSeparator() + printGroup(i) + System.lineSeparator();
+            int group = entry.getGroup();
+            if(group != -1)
+            {
+                if(groupString[group] == null)
+                    groupString[group] = "Group " + group + ":" + System.lineSeparator() + "\t";
+
+                groupString[group] += entry.getKey() + "   ";
+            }
         }
         
-        return groupString;
+        String g = "";
+        for(String group : groupString)
+            g += group + System.lineSeparator();
+        
+        return g;
     }
     
-    //get group i
-    public Group getGroup(int group)
-    {
-        return groups[group];
-    }
     
     //print group i
     public String printGroup(int group)
     {
-        return groups[group].toString();
+        String list = null;
+        for(Entry item :  items)
+        {
+            if(item.getGroup() == group)
+            {
+                if(list == null)
+                    list = "\t";
+                
+                list += item + "   ";
+            }
+        }
+        
+        return list;
     }
     
     //add pair
@@ -117,41 +122,27 @@ public class Groups
         int firstB = getGroupWithItem(first);
         int secondB = getGroupWithItem(second);
         
+        //If both items are in a set, and they are equal then break since they are already in the same group.
         if(firstB != -1 && secondB != -1 && firstB == secondB)
             return;
         
-        if(firstB != -1 && secondB != -1)
+        if(firstB != -1 && secondB != -1)       //Both are in different groups so join secondB to firstB.
             join(firstB, secondB);
-        else if(firstB != -1 && secondB == -1)
+        else if(firstB != -1 && secondB == -1)  //Add second to first group.
             add(second, firstB);
-        else if(firstB == -1 && secondB != -1)
+        else if(firstB == -1 && secondB != -1)  //Add first to second group.
             add(first, secondB);
-        else
+        else                                    //Neither is in a group so add both to new group.
         {
-            Group group = new Group();
-            group.add(items[first - 1].getKey());
-            group.add(items[second - 1].getKey());
-            
-            if(n == groups.length) resize(2 * groups.length);
-            
-            items[first - 1].setGroup(n);
-            items[second - 1].setGroup(n);
-            groups[n++] = group;
+            items[first].setGroup(n);
+            items[second].setGroup(n);
+            n++;
         }
     }
     
-    private void resize(int max)
-    {
-        Group[] temp = new Group[max];
-        System.arraycopy(groups, 0, temp, 0, n);
-        groups = temp;
-    }
-    
-    //Is item in a group
+    //Get group of item.
     public int getGroupWithItem(int item)
     {
-        Integer g = items[item - 1].getGroup();
-        
-        return g == null ? -1 : g;
+        return items[item].getGroup();
     }
 }

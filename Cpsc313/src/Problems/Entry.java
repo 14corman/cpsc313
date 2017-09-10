@@ -12,7 +12,7 @@ package Problems;
 public class Entry {
     
     private final int key;
-    private Integer group = null;
+    private int group = -1;
     
     public Entry(int key)
     {
@@ -29,7 +29,7 @@ public class Entry {
         this.group = group;
     }
     
-    public Integer getGroup()
+    public int getGroup()
     {
         return group;
     }
