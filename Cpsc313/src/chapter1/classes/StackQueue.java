@@ -5,7 +5,6 @@
  */
 package chapter1.classes;
 
-import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
 import java.util.Iterator;
 
@@ -16,7 +15,6 @@ import java.util.Iterator;
 public class StackQueue<K> {
     Stack<K> top = new Stack();
     Stack<K> bottom = new Stack();
-    Queue queue = new Queue();
     
     public void enqueue(K item)
     {

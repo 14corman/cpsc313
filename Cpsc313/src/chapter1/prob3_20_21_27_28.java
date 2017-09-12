@@ -10,7 +10,7 @@ package chapter1;
  *
  * @author Cory Edwards
  */
-public class rob3_20_21_27_28 {
+public class prob3_20_21_27_28 {
     
     Node<String> firstNode = new Node();
     int n = 0;
