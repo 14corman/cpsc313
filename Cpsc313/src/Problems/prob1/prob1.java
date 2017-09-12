@@ -17,7 +17,7 @@ public class prob1
     public static void main(String args[])
     {
         In in = new In(args[0]);
-        int n = in.readInt();
+        int n = in.readInt() + 1;
         
         //Import version
 //        GroupList<Integer> groups = new GroupList();
@@ -48,7 +48,7 @@ public class prob1
         StdOut.println();
         StdOut.println("Number of groups: " + groups.getNumGroups());
         StdOut.println("Number of items: " + groups.getNumItems());
-        StdOut.println();
-        StdOut.println(groups.toString());
+//        StdOut.println();
+//        StdOut.println(groups.toString());
     }
 }

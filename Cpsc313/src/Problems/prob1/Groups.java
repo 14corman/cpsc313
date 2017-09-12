@@ -50,7 +50,7 @@ public class Groups
     
     public int getNumGroups()
     {
-        return n;
+        return n + 1;
     }
     
     //query if 2 items are in same group
@@ -59,7 +59,7 @@ public class Groups
         int f = items[first].getGroup();
         int s = items[second].getGroup();
         
-        if(s == -1 || f == -1)
+        if(s <= -1 || f <= -1)
             return false;
         else
         {
