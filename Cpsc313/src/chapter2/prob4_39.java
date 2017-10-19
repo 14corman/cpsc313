@@ -16,7 +16,7 @@ import edu.princeton.cs.algs4.Stopwatch;
 public class prob4_39 {
     public static void main(String[] args)
     {
-        int n = 10000000;
+        int n = 100000000;
         double prob = 0.0;
 
         for(int i = 0; i < 10; i++)

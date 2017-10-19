@@ -34,7 +34,6 @@ public class prob1_31 {
         double prev = timeTrial(1000);
         for (int n = 1000; true; n += n) {
             double time = timeTrial(n);
-            //182,800,000 or 182.8 mH clock speed
 //            StdOut.printf("%7d %7.1f %7.1f %5.1f\n", n, ((0.5 * Math.pow(n, 2)) + n) / 182800000, time, time/prev);
 //            StdOut.printf("%7d %7.1f %7.1f %5.1f\n", n, ((0.5 * Math.pow(n, 2)) + (0.25 * Math.pow(n, 2))) / 182800000,  time, time/prev);
             StdOut.printf("%7d %7.1f %7.1f %5.1f\n", n, Math.sqrt(Math.pow(n, 3)) / 647634465, time, time/prev);
