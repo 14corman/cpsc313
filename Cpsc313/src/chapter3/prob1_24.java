@@ -18,8 +18,6 @@ import edu.princeton.cs.algs4.Stopwatch;
  */
 public class prob1_24
 {
-    //Total BinarySearchST = 0.09351000000000002 sec
-    //Total CutSearchST = 0.10903999999999998 sec
     public static void main(String[] args) {
         int n = 100, m = 1000000;
         double sum = 0.0;
