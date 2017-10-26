@@ -6,6 +6,7 @@
 package chapter3;
 
 import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.Stack;
 import java.util.NoSuchElementException;
 
 /**
@@ -151,13 +152,15 @@ public class prob2_14<Key extends Comparable<Key>, Value> {
         if (hi == null) throw new IllegalArgumentException("second argument to keys() is null");
 
         Queue<Key> queue = new Queue();
-        Node current = root;
-        while(current != null) {
+        Stack<Node> stack = new Stack();
+        stack.push(root);
+        while(!stack.isEmpty()) {
+            Node current = stack.pop();
             int cmplo = lo.compareTo(current.key); 
             int cmphi = hi.compareTo(current.key); 
-            if (cmplo < 0) current = current.left;
+            if (cmplo < 0) stack.push(current.left);
             if (cmplo <= 0 && cmphi >= 0) queue.enqueue(current.key); 
-            if (cmphi > 0) current = current.right; 
+            if (cmphi > 0) stack.push(current.right);
         }
         return queue;
     } 
