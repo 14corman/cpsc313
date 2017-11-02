@@ -24,10 +24,12 @@ public class prob4_43
             {
                 ModifiedLinearProbingHashST<Integer, Integer> map = new ModifiedLinearProbingHashST(n);
                 for(int x = 0; x < n; x++)
-                    compares += map.put(StdRandom.uniform(-100000, 100000), x);
+                    map.put(StdRandom.uniform(Integer.MAX_VALUE), x);
+                compares += map.numCompares;
             }
-            
-            StdOut.println(" n = " + n + " actual compares = " + (compares / 100) + " estimated compares = " + (Math.sqrt(Math.PI / 2) * Math.sqrt(Math.pow(n, 3))));
+            double estimate = (Math.sqrt(Math.PI / 2) * Math.sqrt(Math.pow(n, 3)));
+            int average = (compares / 100);
+            StdOut.println(" n = " + n + " actual compares = " + average + " estimated compares = " + estimate + " ratio = " + (average / estimate));
         }
     }
 }
