@@ -6,9 +6,11 @@
 package chapter3;
 
 import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.SET;
-import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.LinearProbingHashST;
+import edu.princeton.cs.algs4.RedBlackBST;
+import edu.princeton.cs.algs4.SeparateChainingHashST;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.Stopwatch;
 
 /**
  *
@@ -20,15 +22,20 @@ public class BlackFilterModified
     private BlackFilterModified() { }
 
     public static void main(String[] args) {
-        for(int i = 0; i < 2; i++)
+        Object dummy = new Object();
+        double time = 0.0;
+        for(int i = 0; i < 10; i++)
         {
-            SET<String> dict = new SET<String>();
+            Stopwatch watch = new Stopwatch();
+//            RedBlackBST<String, Object> dict = new RedBlackBST();
+//            SeparateChainingHashST<String, Object> dict = new SeparateChainingHashST();
+            LinearProbingHashST<String, Object> dict = new LinearProbingHashST();
 
             // read in strings and add to set
             In dictFile = new In(args[0]);
             while (!dictFile.isEmpty()) {
                 String word = dictFile.readString();
-                dict.add(word);
+                dict.put(word, dummy);
             }
 
             // read in strings and add to set
@@ -38,6 +45,8 @@ public class BlackFilterModified
                 if (!dict.contains(word))
                     StdOut.println(word);
             }
+            time += watch.elapsedTime();
         }
+        StdOut.println("time = " + (time / 10));
     }
 }
