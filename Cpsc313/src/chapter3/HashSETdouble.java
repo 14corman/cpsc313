@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package chapter3;
 
 import edu.princeton.cs.algs4.Queue;
@@ -20,19 +15,10 @@ private static final int INIT_CAPACITY = 4;
     private int m;           // size of linear probing table
     private double[] keys;      // the keys
 
-
-    /**
-     * Initializes an empty symbol table.
-     */
     public HashSETdouble() {
         this(INIT_CAPACITY);
     }
 
-    /**
-     * Initializes an empty symbol table with the specified initial capacity.
-     *
-     * @param capacity the initial capacity
-     */
     public HashSETdouble(int capacity) {
         m = capacity;
         n = 0;
@@ -40,43 +26,22 @@ private static final int INIT_CAPACITY = 4;
         Arrays.fill(keys, Double.MIN_VALUE);
     }
 
-    /**
-     * Returns the number of key-value pairs in this symbol table.
-     *
-     * @return the number of key-value pairs in this symbol table
-     */
     public double size() {
         return n;
     }
 
-    /**
-     * Returns true if this symbol table is empty.
-     *
-     * @return {@code true} if this symbol table is empty;
-     *         {@code false} otherwise
-     */
     public boolean isEmpty() {
         return size() == 0;
     }
 
-    /**
-     * Returns true if this symbol table contains the specified key.
-     *
-     * @param  key the key
-     * @return {@code true} if this symbol table contains {@code key};
-     *         {@code false} otherwise
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public boolean contains(double key) {
         return get(key);
     }
 
-    // hash function for keys - returns value between 0 and M-1
     private int hash(double key) {
         return (Double.valueOf(key).hashCode() & 0x7fffffff) % m;
     }
 
-    // resizes the hash table to the given capacity by re-hashing all of the keys
     private void resize(int capacity) {
         HashSETdouble temp = new HashSETdouble(capacity);
         for (int i = 0; i < m; i++) {
@@ -88,16 +53,6 @@ private static final int INIT_CAPACITY = 4;
         m    = temp.m;
     }
 
-    /**
-     * Inserts the specified key-value pair into the symbol table, overwriting the old 
-     * value with the new value if the symbol table already contains the specified key.
-     * Deletes the specified key (and its associated value) from this symbol table
-     * if the specified value is {@code null}.
-     *
-     * @param  key the key
-     * @param  val the value
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public void put(double key) {
         if (key == Double.MIN_VALUE) throw new IllegalArgumentException("first argument to put() is null");
 
@@ -114,13 +69,6 @@ private static final int INIT_CAPACITY = 4;
         n++;
     }
 
-    /**
-     * Returns the value associated with the specified key.
-     * @param key the key
-     * @return the value associated with {@code key};
-     *         {@code null} if no such value
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     private boolean get(double key) {
         if (key == Double.MIN_VALUE) throw new IllegalArgumentException("argument to get() is null");
         for (int i = hash(key); keys[i] != Double.MIN_VALUE; i = (i + 1) % m)
@@ -129,13 +77,6 @@ private static final int INIT_CAPACITY = 4;
         return false;
     }
 
-    /**
-     * Removes the specified key and its associated value from this symbol table     
-     * (if the key is in this symbol table).    
-     *
-     * @param  key the key
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public void delete(double key) {
         if (key == Double.MIN_VALUE) throw new IllegalArgumentException("argument to delete() is null");
         if (!contains(key)) return;
@@ -168,13 +109,6 @@ private static final int INIT_CAPACITY = 4;
         assert check();
     }
 
-    /**
-     * Returns all keys in this symbol table as an {@code Iterable}.
-     * To iterate over all of the keys in the symbol table named {@code st},
-     * use the foreach notation: {@code for (double key : st.keys())}.
-     *
-     * @return all keys in this symbol table
-     */
     public Iterable<Double> keys() {
         Queue<Double> queue = new Queue();
         for (int i = 0; i < m; i++)
@@ -182,8 +116,6 @@ private static final int INIT_CAPACITY = 4;
         return queue;
     }
 
-    // integrity check - don't check after each put() because
-    // integrity not maintained during a delete()
     private boolean check() {
 
         // check that hash table is at most 50% full

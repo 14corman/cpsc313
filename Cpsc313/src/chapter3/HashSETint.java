@@ -20,19 +20,10 @@ public class HashSETint {
     private int m;           // size of linear probing table
     private int[] keys;      // the keys
 
-
-    /**
-     * Initializes an empty symbol table.
-     */
     public HashSETint() {
         this(INIT_CAPACITY);
     }
 
-    /**
-     * Initializes an empty symbol table with the specified initial capacity.
-     *
-     * @param capacity the initial capacity
-     */
     public HashSETint(int capacity) {
         m = capacity;
         n = 0;
@@ -40,33 +31,14 @@ public class HashSETint {
         Arrays.fill(keys, Integer.MIN_VALUE);
     }
 
-    /**
-     * Returns the number of key-value pairs in this symbol table.
-     *
-     * @return the number of key-value pairs in this symbol table
-     */
     public int size() {
         return n;
     }
 
-    /**
-     * Returns true if this symbol table is empty.
-     *
-     * @return {@code true} if this symbol table is empty;
-     *         {@code false} otherwise
-     */
     public boolean isEmpty() {
         return size() == 0;
     }
 
-    /**
-     * Returns true if this symbol table contains the specified key.
-     *
-     * @param  key the key
-     * @return {@code true} if this symbol table contains {@code key};
-     *         {@code false} otherwise
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public boolean contains(int key) {
         return get(key);
     }
@@ -88,16 +60,6 @@ public class HashSETint {
         m    = temp.m;
     }
 
-    /**
-     * Inserts the specified key-value pair into the symbol table, overwriting the old 
-     * value with the new value if the symbol table already contains the specified key.
-     * Deletes the specified key (and its associated value) from this symbol table
-     * if the specified value is {@code null}.
-     *
-     * @param  key the key
-     * @param  val the value
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public void put(int key) {
         if (key == Integer.MIN_VALUE) throw new IllegalArgumentException("first argument to put() is null");
 
@@ -114,13 +76,6 @@ public class HashSETint {
         n++;
     }
 
-    /**
-     * Returns the value associated with the specified key.
-     * @param key the key
-     * @return the value associated with {@code key};
-     *         {@code null} if no such value
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     private boolean get(int key) {
         if (key == Integer.MIN_VALUE) throw new IllegalArgumentException("argument to get() is null");
         for (int i = hash(key); keys[i] != Integer.MIN_VALUE; i = (i + 1) % m)
@@ -129,13 +84,6 @@ public class HashSETint {
         return false;
     }
 
-    /**
-     * Removes the specified key and its associated value from this symbol table     
-     * (if the key is in this symbol table).    
-     *
-     * @param  key the key
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public void delete(int key) {
         if (key == Integer.MIN_VALUE) throw new IllegalArgumentException("argument to delete() is null");
         if (!contains(key)) return;
@@ -168,13 +116,6 @@ public class HashSETint {
         assert check();
     }
 
-    /**
-     * Returns all keys in this symbol table as an {@code Iterable}.
-     * To iterate over all of the keys in the symbol table named {@code st},
-     * use the foreach notation: {@code for (int key : st.keys())}.
-     *
-     * @return all keys in this symbol table
-     */
     public Iterable<Integer> keys() {
         Queue<Integer> queue = new Queue();
         for (int i = 0; i < m; i++)
@@ -182,8 +123,6 @@ public class HashSETint {
         return queue;
     }
 
-    // integrity check - don't check after each put() because
-    // integrity not maintained during a delete()
     private boolean check() {
 
         // check that hash table is at most 50% full

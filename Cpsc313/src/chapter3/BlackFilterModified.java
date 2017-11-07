@@ -27,9 +27,9 @@ public class BlackFilterModified
         for(int i = 0; i < 10; i++)
         {
             Stopwatch watch = new Stopwatch();
-//            RedBlackBST<String, Object> dict = new RedBlackBST();
+            RedBlackBST<String, Object> dict = new RedBlackBST();
 //            SeparateChainingHashST<String, Object> dict = new SeparateChainingHashST();
-            LinearProbingHashST<String, Object> dict = new LinearProbingHashST();
+//            LinearProbingHashST<String, Object> dict = new LinearProbingHashST();
 
             // read in strings and add to set
             In dictFile = new In(args[0]);

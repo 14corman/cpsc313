@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package chapter3;
 
 import edu.princeton.cs.algs4.Queue;
@@ -11,7 +6,6 @@ import java.util.Arrays;
 /**
  *
  * @author cjedwards1
- * 
  * Problem 3.5.4
  */
 public class HashSTint<Value> {
@@ -22,19 +16,10 @@ public class HashSTint<Value> {
     private int[] keys;      // the keys
     private Value[] vals;    // the values
 
-
-    /**
-     * Initializes an empty symbol table.
-     */
     public HashSTint() {
         this(INIT_CAPACITY);
     }
 
-    /**
-     * Initializes an empty symbol table with the specified initial capacity.
-     *
-     * @param capacity the initial capacity
-     */
     public HashSTint(int capacity) {
         m = capacity;
         n = 0;
@@ -43,33 +28,14 @@ public class HashSTint<Value> {
         vals = (Value[]) new Object[m];
     }
 
-    /**
-     * Returns the number of key-value pairs in this symbol table.
-     *
-     * @return the number of key-value pairs in this symbol table
-     */
     public int size() {
         return n;
     }
 
-    /**
-     * Returns true if this symbol table is empty.
-     *
-     * @return {@code true} if this symbol table is empty;
-     *         {@code false} otherwise
-     */
     public boolean isEmpty() {
         return size() == 0;
     }
 
-    /**
-     * Returns true if this symbol table contains the specified key.
-     *
-     * @param  key the key
-     * @return {@code true} if this symbol table contains {@code key};
-     *         {@code false} otherwise
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public boolean contains(int key) {
         return get(key) != null;
     }
@@ -92,16 +58,6 @@ public class HashSTint<Value> {
         m    = temp.m;
     }
 
-    /**
-     * Inserts the specified key-value pair into the symbol table, overwriting the old 
-     * value with the new value if the symbol table already contains the specified key.
-     * Deletes the specified key (and its associated value) from this symbol table
-     * if the specified value is {@code null}.
-     *
-     * @param  key the key
-     * @param  val the value
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public void put(int key, Value val) {
         if (key == Integer.MIN_VALUE) throw new IllegalArgumentException("first argument to put() is null");
 
@@ -125,13 +81,6 @@ public class HashSTint<Value> {
         n++;
     }
 
-    /**
-     * Returns the value associated with the specified key.
-     * @param key the key
-     * @return the value associated with {@code key};
-     *         {@code null} if no such value
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public Value get(int key) {
         if (key == Integer.MIN_VALUE) throw new IllegalArgumentException("argument to get() is null");
         for (int i = hash(key); keys[i] != Integer.MIN_VALUE; i = (i + 1) % m)
@@ -140,13 +89,6 @@ public class HashSTint<Value> {
         return null;
     }
 
-    /**
-     * Removes the specified key and its associated value from this symbol table     
-     * (if the key is in this symbol table).    
-     *
-     * @param  key the key
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public void delete(int key) {
         if (key == Integer.MIN_VALUE) throw new IllegalArgumentException("argument to delete() is null");
         if (!contains(key)) return;
@@ -182,13 +124,6 @@ public class HashSTint<Value> {
         assert check();
     }
 
-    /**
-     * Returns all keys in this symbol table as an {@code Iterable}.
-     * To iterate over all of the keys in the symbol table named {@code st},
-     * use the foreach notation: {@code for (int key : st.keys())}.
-     *
-     * @return all keys in this symbol table
-     */
     public Iterable<Integer> keys() {
         Queue<Integer> queue = new Queue();
         for (int i = 0; i < m; i++)
@@ -196,8 +131,6 @@ public class HashSTint<Value> {
         return queue;
     }
 
-    // integrity check - don't check after each put() because
-    // integrity not maintained during a delete()
     private boolean check() {
 
         // check that hash table is at most 50% full
