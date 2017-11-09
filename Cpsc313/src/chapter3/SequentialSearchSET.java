@@ -1,8 +1,6 @@
 package chapter3;
 
 import edu.princeton.cs.algs4.Queue;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 
 /**
  *
@@ -76,15 +74,5 @@ public class SequentialSearchSET<Key> {
         for (Node x = first; x != null; x = x.next)
             queue.enqueue(x.key);
         return queue;
-    }
-
-    public static void main(String[] args) {
-        SequentialSearchSET<String> st = new SequentialSearchSET();
-        while(!StdIn.isEmpty()) {
-            String key = StdIn.readString();
-            st.put(key);
-        }
-        for (String s : st.keys())
-            StdOut.println(s);
     }
 }
