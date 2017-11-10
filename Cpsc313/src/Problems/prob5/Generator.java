@@ -43,38 +43,40 @@ public class Generator
             return;
         }
         
-        RedBlackBST<String, ArrayList<Character>> dictionary = new RedBlackBST();
+        LinearProbingHashST<String, ArrayList<Character>> dictionary = new LinearProbingHashST();
         ArrayList<Character> charactersInSource = new ArrayList();
         In source = new In(args[0]);
         String sourceText = source.readAll();
+        for(char c : sourceText.toCharArray())
+            charactersInSource.add(c);
+        
         int stride = Integer.parseInt(args[1]);
+        StringBuilder textOutput = new StringBuilder();
+        textOutput.append(sourceText.substring(0, stride));
         for(int i = 0; i < sourceText.length() - stride; i++)
         {
             //Get the key of characters.
             String chars = sourceText.substring(i, i + stride);
-            charactersInSource.add(sourceText.charAt(i));
             
             //Get the list of characters that come from this key.
-            ArrayList<Character> list = dictionary.get(chars);
-            if(list == null) 
+            ArrayList<Character> list;
+            if(dictionary.contains(chars))
+                list = dictionary.get(chars);
+            else
                 list = new ArrayList();
 
             //Get the character after the key and place it in the array.
-            char character = sourceText.charAt(i + stride);
-            list.add(character);
+            list.add(sourceText.charAt(i + stride));
             dictionary.put(chars, list);
         }
         
-        StringBuilder textOutput = new StringBuilder();
-        
         //We want to pick (stride) random characters, so pick
         //(stride) random characters from the list of characters.
-        for(int i = 0; i < stride; i++)
-        {
-            int random = StdRandom.uniform(dictionary.size());
-            textOutput.append(dictionary.select(random));
-        }
-        
+//        for(int i = 0; i < stride; i++)
+//        {
+//            int random = StdRandom.uniform(charactersInSource.size());
+//            textOutput.append(charactersInSource.get(random));
+//        }
         
         int outputLength = Integer.parseInt(args[2]);
         for(int i = 0; i < outputLength; i++)
