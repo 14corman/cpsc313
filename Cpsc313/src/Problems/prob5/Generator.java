@@ -64,7 +64,8 @@ public class Generator
         
         //Add the initial key to the output.
         StringBuilder textOutput = new StringBuilder();
-        textOutput.append(sourceText.substring(0, stride));
+        int tempRandom = StdRandom.uniform(sourceText.length());
+        textOutput.append(sourceText.substring(tempRandom, tempRandom + stride));
 
         int outputLength = Integer.parseInt(args[2]);
         for(int i = 0; i < outputLength; i++)
@@ -90,7 +91,8 @@ public class Generator
         if(args.length > 3 && args[3] != null)
         {
             Out out = new Out(args[3]);
-            out.print(textOutput.toString());
+            out.println("The key size: " + stride);
+            out.println(textOutput.toString());
             out.close();
         }
         else
