@@ -7,15 +7,10 @@ package Problems.prob5;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.LinearProbingHashST;
-import edu.princeton.cs.algs4.RedBlackBST;
+import edu.princeton.cs.algs4.Out;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -43,16 +38,13 @@ public class Generator
             return;
         }
         
+        //The ArrayLists will act as auto expanding Character arrays to keep track of characters
+        //for the different keys.
         LinearProbingHashST<String, ArrayList<Character>> dictionary = new LinearProbingHashST();
-        ArrayList<Character> charactersInSource = new ArrayList();
         In source = new In(args[0]);
         String sourceText = source.readAll();
-        for(char c : sourceText.toCharArray())
-            charactersInSource.add(c);
         
         int stride = Integer.parseInt(args[1]);
-        StringBuilder textOutput = new StringBuilder();
-        textOutput.append(sourceText.substring(0, stride));
         for(int i = 0; i < sourceText.length() - stride; i++)
         {
             //Get the key of characters.
@@ -70,13 +62,9 @@ public class Generator
             dictionary.put(chars, list);
         }
         
-        //We want to pick (stride) random characters, so pick
-        //(stride) random characters from the list of characters.
-//        for(int i = 0; i < stride; i++)
-//        {
-//            int random = StdRandom.uniform(charactersInSource.size());
-//            textOutput.append(charactersInSource.get(random));
-//        }
+        //Add the initial key to the output.
+        StringBuilder textOutput = new StringBuilder();
+        textOutput.append(sourceText.substring(0, stride));
         
         int outputLength = Integer.parseInt(args[2]);
         for(int i = 0; i < outputLength; i++)
@@ -93,21 +81,17 @@ public class Generator
             }
             else
             {
-                int random = StdRandom.uniform(charactersInSource.size());
-                textOutput.append(charactersInSource.get(random));
+                //Add random character from source.
+                int random = StdRandom.uniform(sourceText.length());
+                textOutput.append(sourceText.charAt(random));
             }
         }
         
-        if( args.length > 3 && args[3] != null)
+        if(args.length > 3 && args[3] != null)
         {
-            try(BufferedWriter out = new BufferedWriter(new FileWriter(args[3])))
-            {
-                out.write(textOutput.toString());
-            }
-            catch(IOException ex)
-            {
-                Logger.getLogger(Generator.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Out out = new Out(args[3]);
+            out.print(textOutput.toString());
+            out.close();
         }
         else
         {
