@@ -43,7 +43,7 @@ public class Generator
         LinearProbingHashST<String, ArrayList<Character>> dictionary = new LinearProbingHashST();
         In source = new In(args[0]);
         String sourceText = source.readAll();
-        
+
         int stride = Integer.parseInt(args[1]);
         for(int i = 0; i < sourceText.length() - stride; i++)
         {
@@ -65,7 +65,7 @@ public class Generator
         //Add the initial key to the output.
         StringBuilder textOutput = new StringBuilder();
         textOutput.append(sourceText.substring(0, stride));
-        
+
         int outputLength = Integer.parseInt(args[2]);
         for(int i = 0; i < outputLength; i++)
         {
