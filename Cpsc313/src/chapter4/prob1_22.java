@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package chapter4;
 
 import edu.princeton.cs.algs4.BreadthFirstPaths;
 import edu.princeton.cs.algs4.Graph;
-import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.SymbolGraph;
 
@@ -17,38 +11,26 @@ import edu.princeton.cs.algs4.SymbolGraph;
  */
 public class prob1_22 {
     public static void main(String[] args) {
-        String filename  = args[0];
-        String delimiter = args[1];
-        String source    = args[2];
-
-        // StdOut.println("Source: " + source);
-
-        SymbolGraph sg = new SymbolGraph(filename, delimiter);
+        SymbolGraph sg = new SymbolGraph("movies.txt", "/");
         Graph G = sg.graph();
-        if (!sg.contains(source)) {
-            StdOut.println(source + " not in database.");
-            return;
-        }
-
-        int s = sg.indexOf(source);
+        int s = sg.indexOf("Bacon, Kevin");
         BreadthFirstPaths bfs = new BreadthFirstPaths(G, s);
-
-        while (!StdIn.isEmpty()) {
-            String sink = StdIn.readLine();
-            if (sg.contains(sink)) {
-                int t = sg.indexOf(sink);
+        String[] actors = new String[]{"Garfield, Andrew", "Gosling, Ryan", "Mortensen, Viggo", "Washington, Denzel", "Bridges, Jeff", "Ali, Mahershala",
+                                        "Patel, Dev", "Hedges, Lucas", "Shannon, Michael", "Huppert, Isabelle", "Negga, Ruth", "Stone, Emma"};
+        for(String actor : actors) {
+            if (sg.contains(actor)) {
+                int t = sg.indexOf(actor);
                 if (bfs.hasPathTo(t)) {
-                    for (int v : bfs.pathTo(t)) {
-                        StdOut.println("   " + sg.nameOf(v));
-                    }
+                    int number = 0;
+                    for (int v : bfs.pathTo(t))
+                        number++;
+                    StdOut.println(actor + "\t\thas number " + number);
                 }
-                else {
-                    StdOut.println("Not connected");
-                }
+                else
+                    StdOut.println(actor + "\t\tNot connected");
             }
-            else {
-                StdOut.println("   Not in database.");
-            }
+            else
+                StdOut.println(actor + "\t\tNot in database.");
         }
     }
 }

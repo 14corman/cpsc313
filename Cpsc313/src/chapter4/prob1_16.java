@@ -24,20 +24,14 @@ public class prob1_16 {
         int max = 0;
         int vertex = 0;
         for(int i = 0; i < v; i++){
-            Iterable<Integer> iter = dfp.pathTo(i);
-            if(iter != null) {
-                Iterator<Integer> it = iter.iterator();
-                int count = 0;
-                while(it.hasNext()){
-                    it.next();
-                    count++;
-                }
-                if(min > count) {
-                    min = count;
-                    vertex = i;
-                }
-                if(max < count) max = count;
+            int count = 0;
+            for(Integer nv : dfp.pathTo(i))
+                count++;
+            if(min > count) {
+                min = count;
+                vertex = i;
             }
+            if(max < count) max = count;
         }
         diameter = max;
         radius = min;
