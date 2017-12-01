@@ -16,13 +16,9 @@ import java.util.Set;
  * @author Cory Edwards
  */
 public class prob3_24 {
-    private double weight;                        // weight of MST
-    private final Set<Edge> mst = new HashSet();  // edges in MST
+    private double weight;
+    private final Set<Edge> mst = new HashSet();
 
-    /**
-     * Compute a minimum spanning tree (or forest) of an edge-weighted graph.
-     * @param G the edge-weighted graph
-     */
     public prob3_24(EdgeWeightedGraph G) {
         MaxPQ<Edge> pq = new MaxPQ();
         for (Edge e : G.edges()) {
@@ -32,10 +28,11 @@ public class prob3_24 {
 
         while (!pq.isEmpty()) {
             Edge e = pq.delMax();
-            if(checkIfConnected(G.V()))
-                mst.remove(e);
-            else
+            mst.remove(e);
+            if(!checkIfConnected(G.V())){
                 weight += e.weight();
+                mst.add(e);
+            }
         }
     }
     
@@ -44,25 +41,16 @@ public class prob3_24 {
         for(Edge e : mst)
             marked[e.either()] = true;
         
-        for(Edge e : mst)
-            if(!marked[e.either()])
+        for(int i = 0; i < v; i++)
+            if(!marked[i])
                 return false;
         return true;
     }
 
-    /**
-     * Returns the edges in a minimum spanning tree (or forest).
-     * @return the edges in a minimum spanning tree (or forest) as
-     *    an iterable of edges
-     */
     public Iterable<Edge> edges() {
         return mst;
     }
 
-    /**
-     * Returns the sum of the edge weights in a minimum spanning tree (or forest).
-     * @return the sum of the edge weights in a minimum spanning tree (or forest)
-     */
     public double weight() {
         return weight;
     }
